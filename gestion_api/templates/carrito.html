@@ -1,0 +1,30 @@
+{%extends "base.html"%}
+{% block title %} Sport4All - Carrito de compra{% endblock %}
+{% block content %}
+<div class="container text-center">
+    <div class="row justify-content-md-center">     
+        <div class="card bg-faded" style="width: 100%; margin: 10px 10px;">
+            <p class="mb-3" style="text-align:right;">  <b>Usuario</b> {{usuario}}</p>
+            <h2 class="card-title" >           
+                <span class="section-heading-lower"><b>NUEVA ORDEN</b></span>
+            </h2>
+            <div class="card-body" >
+                <div class="card-text">
+                    <p class="mb-3">  <b>Folio:</b> {{folio}}</p>
+                    <p class="mb-3">  <b>Fecha:</b> {{fecha}}</p>
+                    {%include "carro/widget_carro.html"%}
+                </div>    
+            </div>
+            {% if request.session.carro.items%}
+            <div class="card-footer text-center">
+                <p class="mb-3">  <b>Subtotal:</b> ${{subtotal}}&nbsp;MXN</p>
+                <p class="mb-3">  <b>IVA:</b> ${{IVA}}&nbsp;MXN</p>
+                <p class="mb-3">  <b>Total:</b> ${{importe_total_carro}}&nbsp;MXN</p>
+                <a href="http://localhost:8000/sport4all/pagar/" class="btn btn-success" style="background-color: rgba(27, 104, 204);">Pagar con paypal</a>
+                <a href="{%url 'carro:eliminar'%}" class="btn btn-success" style="background-color: red;">Vaciar carrito</a>
+            </div>
+            {%endif%}   
+        </div>
+    </div>
+</div>
+{% endblock %}

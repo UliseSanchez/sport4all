@@ -1,0 +1,37 @@
+{%extends "base.html"%}
+{% block title %} Sport4All - Registrar Compra {% endblock %}
+{% block content %}
+{%load static%}
+<section class="page-section clearfix">
+    <div class="container">
+        <div class="intro">
+            <div class="intro-text-center bg-faded p-5 rounded" style="text-align:center;">
+                <h2 class="section-heading mb-4"><span class="section-heading-lower">REGISTRAR COMPRA NUEVA</span></h2>
+                {% for message in messages %}
+                        <div{% if message.tags %} class="alert alert-{{ message.tags }}" style="color:red"{% endif %}><b>{{ message }}</b></div>
+                    {% endfor %}
+                <form action=" {% url 'compra' %}" method="POST">{% csrf_token %}
+                    <table style="margin: 20px auto;">
+                        <tr><h6><th>Folio:</th><td>{{form.folio}}</td></h6></tr> 
+                        <tr><h6><th><b>Fecha:</b></th><td>{{fecha}}</td></h6></tr>
+                        {{form.as_table}}
+                        {% if request.session.carro_compra.items %}
+                            <script>
+                                document.getElementById("proveedor").readOnly = true;
+                            </script>
+                        {% endif %}
+                    </table>
+                    <input type="submit"value="Registrar Producto">
+
+                </form>
+                {%include "carro/widget_compra.html"%}
+               
+            </div>
+        </div>
+    </div>
+</section>
+{%block script%}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src = "{%static 'gestion_api/js/index.js'%}">  </script>
+{% endblock %}
+{% endblock %}

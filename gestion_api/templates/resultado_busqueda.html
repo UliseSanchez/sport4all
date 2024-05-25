@@ -1,0 +1,29 @@
+{%extends "base.html"%}
+{% block title %} Sport4All - CONSULTAR {% endblock %}
+{% block content %}
+
+<section class="page-section clearfix">
+    <div class="container">
+        <div class="intro">
+            <div class="intro-text-center bg-faded p-5 rounded" style="text-align: center;">
+                <h2 class="section-heading mb-4" >
+                    <span class="section-heading-lower">MODIFICAR COMPRA</span>
+                </h2>
+                {%if forms.errors%}
+                <p style="color: red;">Revisa el campo</p>
+                {%endif%}
+                <form action="{% url 'consulta' pk=pk %}" method="POST">{% csrf_token %}
+                    <table style="margin: 20px auto;">
+                        <tr><th>Folio:</th><td>{{compra.id}}</td></tr>
+                        <tr><th>  Proveedor: &nbsp;&nbsp;</th><td>{{compra.IDProveedor}}</td></tr>
+                        <tr><th> Fecha: </th><td>{{compra.fecha}}$</td></tr>
+                        {{form.as_table}}
+                        
+                    </table>
+                    <input type="submit"value="Enviar">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

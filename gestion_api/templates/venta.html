@@ -1,0 +1,47 @@
+{%extends "base.html"%} 
+{% block title %} Sport4All - Registrar Venta{% endblock%} 
+{%load static%} 
+{% block content %}
+<div class="container text-center">
+        {%for producto in productos %} 
+            {%if producto.disponibilidad == True%}
+            <div class="row justify-content-md-center">
+                <div class="col-6">
+                    <div class="card bg-faded" style="width: 100%; margin: 10px 10px;">
+                        <img src="{{producto.imagen.url}}" class="card-img-top"/>
+                        <div class="card-body" >
+                            <h2 class="card-title" >           
+                                <span class="section-heading-lower"><b>{{producto.nombre}}</b></span>
+                            </h2>
+                                <div class="card-text">
+                                    <p class="mb-3">{{producto.descripcion}}</p>
+                                    <p class="mb-3">  Marca: {{producto.marca}}</p>
+                                    <p class="mb-3">  Talla: {{producto.talla}}</p>
+                                    <p class="mb-3">  Precio: ${{producto.precio}}&nbsp;MXN</p>
+                                </div>
+                            </h2>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{%url 'carro:agregar' producto.id%}" class="btn btn-success" style="background-color: rgba(27, 104, 204);">Agregar al carrito</a>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+            {%endif%} 
+        {%endfor%}
+</div>
+<!-- Filtrado (opcional)
+<section class="page-section clearfix">
+    <div class="container" style="width:60%;">
+        <div class="intro">
+            <div class="intro-text-center bg-faded p-5 rounded" style="text-align: center">
+                <p class="mb-3">Filtrar por marca</p>
+                {%for producto in productos %}
+                {{producto.marca}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+</section>            
+-->
+{% endblock %}

@@ -1,0 +1,115 @@
+{%extends "base.html"%}
+{% block title %} Sport4All - Consultar Compras {% endblock %}
+{% block content %}
+<section class="page-section clearfix">
+    <div class="container">
+        <div class="intro">
+            <div class="intro-text-center bg-faded p-5 rounded" style="text-align: center;">
+                <h2 class="section-heading mb-4" >
+                    <span class="section-heading-lower">MODIFICAR COMPRA</span>
+                </h2>
+                {%if forms.errors%}
+                <p style="color: red;">Revisa el campo</p>
+                {%endif%}
+                {% if messages %}
+                <div class="alert alert-danger text-center">
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                <form action="{% url 'buscar' %}" method="POST">{% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit"value="Buscar">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="page-section clearfix">
+    <div class="container">
+        <div class="intro">
+            <div class="intro-text-center bg-faded p-5 rounded" style="text-align: center;">
+                <h2 class="section-heading mb-4">COMPRAS</h2>
+                {%if compras%}
+                        {%for key,value in compras.items%}
+                            <table class="table table-dark table-borderless table-hover ">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid #ddd">
+                                            <tr class= "table-active" style="border-bottom: 1px solid #ddd">
+                                                <th colspan="5" class="text-center">
+                                                    Folio: {{key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{value.estatus}}
+                                                </th>
+                                            </tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                    <tr class="text-center">
+                                        <th>Fecha</th>
+                                        <th>Producto</th>
+                                        <th>Marca</th>
+                                        <th>Cantidad</th>
+                                        <th>Suma</th>
+                                    </tr>
+                                    {%for comprap in value.compra_productos%}
+                                        <tr class="text-center">
+                                            <td>{{value.fecha}}</td>
+                                            <td>{{comprap.IDProducto}}</td>
+                                            {% with id=comprap.id %}
+                                            {%for keys,values in value.proveedores.items%}
+                                            {%if id == keys%}
+                                            <td>{{values}}</td>
+                                            {%endif%}
+                                            {%endfor%}
+                                            <td>{{comprap.cantidad_producto}}</td>
+                                            {%for keys,values in value.totales.items%}
+                                            {%if id == keys%}
+                                            <td>${{values}}&nbsp;MXN</td>
+                                            {%endif%}
+                                            {%endfor%}
+                                            {%endwith%}
+                                        </tr>    
+                                    {%endfor%}
+                                    <tr class="text-center table-active">
+                                        <th colspan="5">Subtotal:&nbsp;${{value.subtotal}}&nbsp;MXN</br>
+                                        </br> IVA:&nbsp;${{value.iva}}&nbsp;MXN</br>                                        
+                                        </br> Total:&nbsp;${{value.total}}&nbsp;MXN</th>
+                                    </tr>
+                                </table>
+                                {%endfor%}
+                            {%else%}
+                            <table class="table table-dark table-borderless table-hover ">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid #ddd">
+                                        <tr class= "table-active" style="border-bottom: 1px solid #ddd">
+                                            <th colspan="4" class="text-center">
+                                                Folio: {{key}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{value.estatus}}
+                                            </th>
+                                        </tr>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                <tr class="text-center">
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Suma</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="alert alert-danger text-center">No hay compras realizadas</div>
+                                    </td>
+                                </tr>
+                            
+                                </tbody>
+                            </table>
+                    {%endif%}        
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+<table class="table table-dark table-borderless ">
+    <thead>
+        <tr style="border-bottom: 1px solid #ddd">
+            <th colspan="6" class="text-center">
+                Carrito de compras
+            </th>
+        </tr>
+        <tr class="text-center">
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Talla</th>
+            <th>Cantidad</th>
+            <th></th>
+            <th>Suma</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%if request.session.carro.items%}
+        {%for key, value in request.session.carro.items%}
+            <tr class="text-center">
+                <td>{{value.nombre}}</td>
+                <td>{{value.marca}}</td>
+                <td>{{value.talla}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>
+                    <a href="{%url 'carro:agregar' value.producto_id%}" class="btn btn-sm btn-success">+<a/>
+                    <a href="{%url 'carro:restar' value.producto_id%}" class="btn btn-sm btn-success">-<a/>
+                </td>
+                <td>${{value.precio}}</td>
+            </tr>
+        {%endfor%}
+        {%else%}
+            <tr>
+                <td colspan="6">
+                    <div class="alert alert-danger text-center">No hay elementos en el carro</div>
+                </td>
+            </tr>
+        {%endif%}
+    </tbody>
+</table>
