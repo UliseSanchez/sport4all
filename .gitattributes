@@ -1,3 +1,5 @@
 
 "* text=auto" 
 "*.js text eol=lf" 
+"* text=auto" 
+"*.txt text eol=lf" 
